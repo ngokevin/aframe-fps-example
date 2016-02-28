@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <script src="https://rawgit.com/aframevr/aframe/dev/dist/aframe.min.js"></script>
+    <script src="components/click-listener.js"></script>
+    <script src="components/collider.js"></script>
+    <script src="components/projectile.js"></script>
+    <script src="components/spawner.js"></script>
+  </head>
+  <body>
+  <a-scene>
+    <a-assets>
+      <a-mixin id="laser"
+               geometry="primitive: cylinder; height: 1; radius: 0.075"
+               material="color: green; metalness: 0.2; opacity: 0.4; roughness: 0.3; side: double"
+               projectile="speed: -0.75" collider></a-mixin>
+    </a-assets>
+
+    <a-camera id="player" position="0 1.8 5" spawner="mixin: laser; on: click"
+              click-listener></a-camera>
+
+    <a-box class="target">
+      <a-animation attribute="opacity" begin="collider-hit" dur="200" ease="linear"
+                   from="1" to="0"></a-animation>
+      <a-animation attribute="scale" begin="collider-hit" dur="200" ease="linear"
+                   to="0 0 0"></a-animation>
+    </a-box>
+
+    <a-sky color="#353B6E"></a-sky>
+  </a-scene>
+  </body>
+</html>
