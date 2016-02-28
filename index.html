@@ -12,20 +12,22 @@
       <a-mixin id="laser"
                geometry="primitive: cylinder; height: 1; radius: 0.075"
                material="color: green; metalness: 0.2; opacity: 0.4; roughness: 0.3; side: double"
-               projectile="speed: -0.75" collider></a-mixin>
+               projectile="speed: -0.5" collider></a-mixin>
+      <img id="enemy" src="img/enemy.png">
     </a-assets>
 
     <a-camera id="player" position="0 1.8 5" spawner="mixin: laser; on: click"
               click-listener></a-camera>
 
-    <a-box class="target">
-      <a-animation attribute="opacity" begin="collider-hit" dur="200" ease="linear"
+    <a-image class="target" look-at="#player" position="0 1 0" src="#enemy"
+             transparent="true">
+      <a-animation attribute="opacity" begin="collider-hit" dur="400" ease="linear"
                    from="1" to="0"></a-animation>
-      <a-animation attribute="scale" begin="collider-hit" dur="200" ease="linear"
+      <a-animation attribute="scale" begin="collider-hit" dur="400" ease="linear"
                    to="0 0 0"></a-animation>
-    </a-box>
+    </a-image>
 
-    <a-sky color="#353B6E"></a-sky>
+    <a-sky color="#252243"></a-sky>
   </a-scene>
   </body>
 </html>
