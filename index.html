@@ -5,29 +5,40 @@
     <script src="components/collider.js"></script>
     <script src="components/projectile.js"></script>
     <script src="components/spawner.js"></script>
+    <script src="https://rawgit.com/ngokevin/aframe-layout-component/master/dist/aframe-layout-component.min.js"></script>
+    <script src="https://rawgit.com/ngokevin/aframe-template-component/master/dist/aframe-template-component.min.js"></script>
   </head>
   <body>
-  <a-scene>
-    <a-assets>
-      <a-mixin id="laser"
-               geometry="primitive: cylinder; height: 1; radius: 0.075"
-               material="color: green; metalness: 0.2; opacity: 0.4; roughness: 0.3; side: double"
-               projectile="speed: -0.5" collider></a-mixin>
-      <img id="enemy" src="img/enemy.png">
-    </a-assets>
+    <a-scene>
+      <a-assets>
+        <a-mixin id="laser"
+                 geometry="primitive: cylinder; height: 1; radius: 0.075"
+                 material="color: green; metalness: 0.2; opacity: 0.4; roughness: 0.3; side: double"
+                 projectile="speed: -0.5" collider></a-mixin>
 
-    <a-camera id="player" position="0 1.8 5" spawner="mixin: laser; on: click"
-              click-listener></a-camera>
+        <img id="enemy-sprite" src="img/enemy.png">
 
-    <a-image class="target" look-at="#player" position="0 1 0" src="#enemy"
-             transparent="true">
-      <a-animation attribute="opacity" begin="collider-hit" dur="400" ease="linear"
-                   from="1" to="0"></a-animation>
-      <a-animation attribute="scale" begin="collider-hit" dur="400" ease="linear"
-                   to="0 0 0"></a-animation>
-    </a-image>
+        <script id="enemies" type="text/x-nunjucks-template">
+          <a-entity layout="type: circle; radius: 10">
+            {% for i in range(10) %}
+              <a-image class="target" look-at="#player" position="0 1 0" src="#enemy-sprite"
+                       transparent="true">
+                <a-animation attribute="opacity" begin="collider-hit" dur="400" ease="linear"
+                             from="1" to="0"></a-animation>
+                <a-animation attribute="scale" begin="collider-hit" dur="400" ease="linear"
+                             to="0 0 0"></a-animation>
+              </a-image>
+            {% endfor %}
+          </a-entity>
+        </script>
+      </a-assets>
 
-    <a-sky color="#252243"></a-sky>
-  </a-scene>
+      <a-camera id="player" position="0 1.8 5" spawner="mixin: laser; on: click"
+                click-listener></a-camera>
+
+      <a-entity template="src: #enemies"></a-entity>
+
+      <a-sky color="#252243"></a-sky>
+    </a-scene>
   </body>
 </html>

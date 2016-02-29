@@ -8,15 +8,7 @@ AFRAME.registerComponent('spawner', {
    * Update event listener.
    */
   update: function (oldData) {
-    var el = this.el;
-    var spawn = this.spawn.bind(this);
-
-    if (oldData && oldData.on === this.data.on) { return; }
-    if (oldData) {
-      el.removeEventListener(oldData.on, spawn);
-    }
-
-    el.addEventListener(this.data.on, spawn);
+    this.el.addEventListener(this.data.on, this.spawn.bind(this));
   },
 
   /**
