@@ -17,15 +17,22 @@ AFRAME.registerComponent('spawner', {
   spawn: function () {
     var el = this.el;
     var entity = document.createElement('a-entity');
+    var entityRotation;
     var matrixWorld = el.object3D.matrixWorld;
     var position = new THREE.Vector3();
     var rotation = this.el.getAttribute('rotation');
 
     position.setFromMatrixPosition(matrixWorld);
     entity.setAttribute('position', position);
-    rotation.x += 90;
-    entity.setAttribute('rotation', rotation);
     entity.setAttribute('mixin', this.data.mixin);
+    entity.addEventListener('loaded', function () {
+      entityRotation = entity.getComputedAttribute('rotation');
+      entity.setAttribute('rotation', {
+        x: entityRotation.x + rotation.x,
+        y: entityRotation.y + rotation.y,
+        z: entityRotation.z + rotation.z
+      });
+    });
     el.sceneEl.appendChild(entity);
     entity.play();
   }
