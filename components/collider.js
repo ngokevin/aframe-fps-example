@@ -1,9 +1,13 @@
 AFRAME.registerComponent('collider', {
+  schema: {
+    target: { default: '' }
+  },
+
   /**
-   * Calculate targets.
+   * Fetch targets.
    */
   init: function () {
-    var targetEls = this.el.sceneEl.querySelectorAll('.target');
+    var targetEls = this.el.sceneEl.querySelectorAll(this.data.target);
     this.targets = [];
     for (var i = 0; i < targetEls.length; i++) {
       this.targets.push(targetEls[i].object3D);
